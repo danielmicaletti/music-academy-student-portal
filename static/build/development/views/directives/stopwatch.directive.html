@@ -1,0 +1,104 @@
+
+<div class="row animated fadeIn">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="header row">
+            	<div class="col-md-12">
+            		<i class="ti-time text-success margin-right-10"/><h4 class="title inline-flex"><span class="text-info"> Timer</span></h4>
+            	</div>
+            </div>
+
+            <div class="content">
+        		<div class="row padding-bottom-10">
+                    <div class="col-md-12 margin-top-10">
+                        <div role="form" class="row">
+                            <div class="col-md-3 form-group">
+                                <label class="" for="setHours">Hours</label>
+                                <select class="form-control border-input" name="setHours" ng-model="setHours" ng-options="hour for hour in twelve">
+                                </select>                        
+                            </div>
+                            <div class="col-md-3 form-group">
+                                <label class="" for="setMinutes">Minutes</label>
+                                <select class="form-control border-input" name="setMinutes" ng-model="setMinutes" ng-options="minute for minute in sixty">
+                                </select>                        
+                            </div>
+                            <div class="col-md-2 margin-10 text-center">
+                                <button class="btn btn-sm btn-default" ng-click="setTime(setHours, setMinutes);">Set Time</button>
+                            </div>
+                        </div>
+                    </div>
+        			<div class="col-md-12 text-center">
+        				<h3 class=""><span class="text-lg">{{hours|numberpad:2}}:{{minutes|numberpad:2}}</span>: {{seconds|numberpad:2}}</h3>
+        			</div>
+        			<div class="col-md-12 text-center margin-10">
+        				<button type="button" class="btn btn-success margin-10" ng-model="startButton" ng-click="start()" ng-disabled="running">Start</button>
+        				<button type="button" class="btn btn-danger margin-10" ng-model="stopButton" ng-click="stop()" ng-disabled="!running">Stop</button>
+        				<button type="button" class="btn btn-info margin-10" ng-model="clearButton" ng-click="clear()" ng-disabled="running">Clear</button>
+        			</div>
+        		</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card">
+            <div class="header row">
+                <div class="col-md-12">
+                    <div class="">
+                        <i class="ti-pulse text-danger margin-right-10"/><h4 class="title inline-flex"><span class="text-info">Metronome</span></h4>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content">
+        		<div class="row">
+        			<div class="col-md-12 text-center">
+
+        		        <div id="beatBarContainer">
+        		            <div id="beatBar" ng-class="{beatLeft:beatLeft, beatRight:beatRight, beatReset:beatReset}" ng-style="beatBarStyle">&nbsp;</div>
+        		        </div>
+        		        <br />
+        		        <div class="">
+        		            <div class="text-lg text-info">{{beatCount}}</div>
+        		        </div>
+
+        			</div>
+
+        			<div class="col-md-12 text-center">
+        				<div class="row">
+        					<div class="col-md-6">
+        						<div class="form-group">
+        							<label class="" for="bpm">Beats per Minute</label>
+        							<input type="text" name="bpm" class="form-control border-input" ng-model="bpm"/>
+        							<button type="button" name="bpmPlus" class="btn btn-sm btn-info margin-5" ng-click="bpmPlus(bpm);"><i class="ti-plus"/></button>
+        							<button type="button" name="bpmMinus" class="btn btn-sm btn-default margin-5" ng-click="bpmMinus(bpm);"><i class="ti-minus"/></button>
+        						</div>
+                            </div>
+                            <div class="col-md-6">
+        						<div class="form-group">
+        							<label for="bpm">Beats per Bar</label>
+        							<input type="text" name="bpb" class="form-control border-input" ng-model="bpb"/>
+        							<button type="button" name="bpbPlus" class="btn btn-sm btn-info margin-5" ng-click="bpbPlus(bpb);"><i class="ti-plus"/></button>
+        							<button type="button" name="bpbMinus" class="btn btn-sm btn-default margin-5" ng-click="bpbMinus(bpb);"><i class="ti-minus"/></button>
+        						</div>
+        					</div>
+
+        					<div class="col-md-12 text-center">
+        						<button type="button" class="btn btn-success margin-10" name="start" ng-click="startMet();" ng-disabled="turnedOn">Start</button>
+        						<button type="button" class="btn btn-danger margin-10" name="stop" ng-click="stopMet();">Stop</button>
+        					</div>
+                            <div class="text-center">
+                                <small class="text-danger" ng-if="metAlert">{{metAlert}}</small>
+                            </div>	
+        				</div>
+        			</div>
+<!--         		    <div id="audioHide">
+        		        <audio id="tick" ng-src="{{tick}}" preload="auto" controls="controls">Need a better standards compliant browser!</audio>
+        		        <audio id="tock" ng-src="{{tock}}" preload="auto" controls="controls">Need a better standards compliant browser!</audio>
+        		    </div> -->	
+        		</div>
+            </div>
+        </div>
+    </div>
+
+</div>

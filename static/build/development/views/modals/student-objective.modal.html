@@ -1,0 +1,32 @@
+
+<div class="modal-header">
+	<h3 class="modal-title">{{vm.modalTitle}}</h3>
+</div>
+<div class="modal-body row">
+
+	<form ng-submit="vm.submitObjective(vm.studentObjective)" novalidate>
+		<div class="form-group col-md-6">
+			<label class="" for="objective">Practice Item</label>
+			<input type="text" name="objective" class="form-control border-input" placeholder="add a practice item" ng-model="vm.studentObjective.objective"/>
+		</div>
+		<div class="form-group col-md-3">
+			<label class="" for="objective_priority">Item Priority</label>
+			<input type="text" name="objective_priority" class="form-control border-input" placeholder="ex: 1, 2, etc." ng-model="vm.studentObjective.objective_priority"/>
+		</div>
+		<div class="form-group col-md-3">
+			<label class="center-block" for="objective_visible">Item Visible</label>
+			<button type="button" name="objective_visible" class="btn btn-default btn-link" ng-click="vm.studentObjective.objective_visible = !vm.studentObjective.objective_visible;" ng-model="vm.studentObjective.objective_visible">
+				<i ng-class="vm.studentObjective.objective_visible ? 'ti-check text-success' : 'ti-layout-sidebar-none text-info'" aria-hidden="true"></i>
+			</button>
+		</div>
+		<div class="form-group col-md-12">
+			<label for="objective_notes">Notes</label>
+			<textarea class="form-control border-input" rows="2" placeholder="practice item notes" name="objective_notes" ng-model="vm.studentObjective.objective_notes"></textarea>
+		</div>
+		<div class="col-md-6">
+			<button class="btn btn-danger margin-10" type="button" ng-click="vm.closeModal()">Cancel</button>
+			<button class="btn btn-primary margin-10" type="submit">Submit</button>		
+		</div>
+	</form>
+
+</div>

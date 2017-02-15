@@ -1,0 +1,89 @@
+<div class="row border-top">
+	<div class="col-md-3">
+		<div class="row border-bottom margin-10">
+			<h5 class="col-md-6">Topics</h5>
+			<button class="btn btn-sm btn-info col-md-6 margin-top-5" ng-click="open({})"><i class="ti-plus"/> Add Topic</button>
+		</div>
+		<form class="" ng-if="category.category_topic.length > 0">
+			<div class="form-group padding-10">
+				<div class="input-group">
+					<div class="input-group-addon border"><i class="fa fa-search"></i></div>
+					<input type="text" class="form-control border-input" placeholder="Search Topics" ng-model="searchItem">
+				</div>      
+			</div>
+		</form>
+
+		<ul class="row padding-left-25">
+			<li class="block" ng-repeat="topic in category.category_topic  | orderBy: '-topic_message.length' | filter:searchItem">
+				<button type="button" class="btn btn-danger btn-fill btn-block margin-top-5 border-r-5 btn-long" ng-click="getMessages(topic.id);">
+					{{topic.topic}}<span class="badge margin-lr-5">{{topic.topic_message.length}}</span> 
+				</button>
+			</li>
+			<li class="" ng-if="searchItem.length">
+				<p class="text-warning">No Topics! Add one!</p>
+			</li>
+		</ul>
+	</div>
+	<div class="col-md-9">
+		<div ng-class="messageClass">
+			<h3 class="text-center text-danger">{{messages.topic}}</h3>
+			<ul>
+				<li ng-repeat="message in messages.topic_message" class="row border border-r-10 margin-10 main-bg-color">
+					<div class="col-md-3 padding-10">
+						<img ng-src="{{path}}{{message.message_user.user_pic}}" alt="{{message.message_user.first_name}} {{message.message_user.last_name}} profile" class="img-circle wh-30 border-white"/>
+						<small class="padding-10 text-center">{{message.message_user.first_name}} {{message.message_user.last_name}}</small>
+						<small class="center-block text-center text-primary">Play Level</small>
+						<div class="center-block height-20 border padding-10" ng-class="playLevelColor[message.message_user.play_level]"></div>
+						<div class="center-block">
+							<small class="text-primary">Current Goal: </small>
+							<small class=""> {{message.message_user.recent_goal.goal}}</small>
+						</div>
+						<div class="center-block">
+						<small class="text-primary">Target Date: </small>
+						<small class="center-block">{{message.message_user.recent_goal.goal_target_date | date:"MMM d, y"}}</small>
+						</div>
+					</div>
+					<div class="col-md-9">
+						<small class="center-block padding-10 text-warning">{{message.message_created  | date:"MMM d, y ' at ' h:mm a"}}</small>
+						<p class="center-block padding-10 message-content" ng-bind-html="message.message | linky:'_blank'"></p>
+						<ul>
+							<li class="center-block margin-tb-5 message-content" ng-repeat="file in message.file_message"><a href="{{path}}{{file.message_file}}" target="_blank">{{file.message_file}}</a></li>
+						</ul>
+					</div>
+				</li>
+				<li ng-if="messages.topic_message.length < 1">
+					<h5 class="text-center text-warning margin-10">No messages. Add one!</h5>
+				</li>
+			</ul>
+			<div class="row" ng-if="messages.topic">
+				<div class="form-group col-md-offset-1 col-md-6">
+					<textarea name="message" msd-elastic class="form-control border-input" ng-model="newMessage.message" placeholder="Add to the discussion!" rows="1" ></textarea> 
+				</div>
+				<div class="form-group col-md-2">
+					<div class="btn btn-fill btn-info form-control border-input img-select" 
+						ngf-select ng-model="newMessage.message_file" 
+						name="file" 
+						ngf-pattern="'image/*,audio/*,video/*,application/pdf,.pdf,.doc,.docx,.xls,.xlsx'" ngf-accept="'image/*,audio/*,video/*,application/pdf'" 
+						ngf-max-size="100MB" 
+						ngf-min-height="100" 
+						ngf-resize="{width: 300, height: 300}"
+						ngf-multiple="true">
+						<i ng-hide="fileProgress < 100" class="ti-file"/>
+						<span ng-show="fileProgress < 100">{{fileProgress}}%</span>
+					</div>
+					<small class="center-block margin-tb-5" ng-repeat="file in newMessage.message_file"><span ng-if="file.$ngfName">{{file.$ngfName}}</span><span ng-if="file.name">{{file.name}}</span></small>
+
+				</div>
+				<div class="form-group col-md-3">
+					<button type="button" class="btn btn-primary" ng-disabled="!newMessage.message.length" ng-click="addMessage(newMessage, messages.id)">Submit</button>
+				</div>
+			</div>			
+		</div>
+		<div ng-if="category.category_topic.length === 0">
+			<h4 class="text-warning text-center">Add a Topic to create a discussion!</h4>
+		</div>
+		<div ng-if="category.category_topic.length > 0 && !messages.topic_message">
+			<h4 class="text-warning text-center">Choose a Topic</h4>
+		</div>
+	</div>
+</div>

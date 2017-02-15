@@ -1,0 +1,76 @@
+
+<div class="card animated fadeIn">
+
+    <div class="header row">
+    	<div class="col-md-6">
+    		<h4 class="title center-block"><a class="" ui-sref="app.student-plan({'userId':userId})">Weekly Lesson Plan</a></h4>
+    		<p class="category center-block">Here is a weekly plan to help you reach your goals.</p>
+    	</div>
+	</div>
+	<div class="header row" ng-if="authAcct.is_staff">
+        <div class="col-md-5">
+			<div class="form-group">
+				<label class="" for="plan">Plan</label>
+				<select class="form-control border-input" ng-model="selectPlan" ng-change="setPlan(selectPlan)" ng-options="plan.plan_title for plan in allPlans">
+				</select>
+			</div>
+		</div>
+		<div class="col-md-3">
+			<div class="center-block" ng-if="selectedPlan.id">
+				<button class="btn btn-link btn-warning" ng-click="openPlan(selectedPlan, true);"><i class="ti-pencil"/></button>
+			</div>
+			<div class="center-block">
+				<button class="btn btn-link btn-info" ng-click="openPlan({}, true);"><i class="ti-plus"/></button>
+			</div>	
+        </div>
+		<div class="col-md-3" ng-if="selectedPlan.id">
+ 	       <button class="btn btn-sm btn-primary" ng-click="openSection({}, true);"><i class="ti-plus"/> Add Section</button>
+        </div>
+    </div>
+
+    <div class="content">
+    	<div class="row margin-bottom-10">
+    		<div class="col-md-12 text-center" ng-show="selectedPlan">
+    			<h5 class="text-dk-blue margin-0">{{selectedPlan.plan_title}}</h5>
+    			<small>{{selectedPlan.plan_description}}</small>
+    		</div>
+    		<div class="col-md-12 text-center" ng-if="!selectedPlan && authAcct.is_staff">
+    			<h5 class="text-danger">Select a Plan</h5>
+    		</div>
+    	</div>
+
+		<uib-accordion>
+			<div uib-accordion-group class="panel-default text-center" heading="Week {{week}}" ng-repeat="(week, weekPlans) in sortedPlans">
+				<div class="row">
+
+					<table class="table table-hover">
+			            <tbody>
+							<tr class="img-select" ng-repeat="wp in weekPlans | orderBy: 'section_number' ">
+								<td class="width-10" ng-click="openSection(wp, false);">{{wp.section_number}}</td>
+								<td class="width-30" ng-click="openSection(wp, false);">
+									{{wp.section_title | limitTo: 50}}<span ng-if="wp.section_title.length > 50">...</span>
+								</td>
+								<td class="width-40" ng-click="openSection(wp, false);">
+									{{wp.section_description| limitTo: 50}}<span ng-if="wp.section_description.length > 50">...</span>
+								</td>
+								<td class="" ng-click="openSection(wp, false);">
+									<div ng-if="wp.plan_section_file.length > 0">
+										<p class="text-success text-center">{{wp.plan_section_file.length}}</p>
+										<small class="center-block">Files</small>
+									</div>
+								</td>
+								<td class="" ng-if="authAcct.is_staff">
+									<button type="button" class="btn btn-warning btn-link" ng-click="openSection(wp, true);"><i class="ti-pencil"/></button>
+									<button type="button" class="btn btn-danger btn-link" ng-click="removePlanSection(wp);"><i class="ti-trash"/></button>
+								</td>
+							</tr>
+			            </tbody>
+			        </table>
+					
+				</div>
+			</div>
+		</uib-accordion>
+
+    </div>
+
+</div>

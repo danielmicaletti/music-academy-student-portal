@@ -1,0 +1,24 @@
+
+<div class="modal-header">
+	<h3 class="modal-title">Add a Topic</h3>
+</div>
+
+<div class="modal-body row">
+
+	<form ng-submit="vm.addNewTopic(vm.newTopic)" novalidate>
+		<div class="form-group col-md-6">
+			<label class="" for="topic">Topic</label>
+			<input type="text" name="topic" class="form-control border-input" placeholder="Topic Title" ng-model="vm.newTopic.topic"/>
+			<small class="help-block text-muted margin-5">Max 50 characters</small>
+		</div>
+		<div class="form-group col-md-12">
+			<label for="topic_message">Message</label>
+			<textarea class="form-control border-input" rows="2" placeholder="Add your message" name="topic_message" ng-model="vm.newTopic.message"></textarea>
+		</div>
+		<div class="col-md-6">
+			<button class="btn btn-danger margin-10" type="button" ng-click="vm.closeModal()">Cancel</button>
+			<button class="btn btn-primary margin-10" type="submit">Submit</button>
+		</div>
+	</form>
+
+</div>

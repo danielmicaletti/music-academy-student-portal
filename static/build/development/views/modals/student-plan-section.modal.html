@@ -1,0 +1,117 @@
+
+<div class="modal-header">
+	<h3 class="modal-title">{{vm.modalTitle}} {{vm.selectedPlan.plan_title}} Section </h3>
+</div>
+
+<div class="modal-body row">
+
+	<form class="col-md-12" ng-submit="vm.submitPlan(vm.plan)" ng-if="vm.authAcct.is_staff && vm.edit" novalidate>
+		<div class="row">
+			<div class="form-group col-md-2">
+				<label class="" for="section_week">Week</label>
+				<input type="text" name="section_week" class="form-control border-input" placeholder="#" ng-model="vm.plan.section_week"/>
+				<small class="help-block text-muted margin-5"></small>
+			</div>
+			<div class="form-group col-md-2">
+				<label class="" for="section_number">Section</label>
+				<input type="text" name="section_number" class="form-control border-input" placeholder="#" ng-model="vm.plan.section_number"/>
+				<small class="help-block text-muted margin-5"></small>
+			</div>
+		</div>
+		<div class="row">
+			<div class="form-group col-md-6 center-block">
+				<label for="section_title">Section Title</label>
+				<input type="text" name="section_title" class="form-control border-input" ng-model="vm.plan.section_title"/>
+			</div>
+		</div>
+		<div class="row">
+			<div class="form-group col-md-6">
+				<label for="section_description">Section Description</label>
+				<input type="text" name="section_description" class="form-control border-input" ng-model="vm.plan.section_description"/>
+			</div>
+		</div>
+		<div class="row">
+			<div class="form-group col-md-8">
+				<label for="section_notes">Section Notes</label>
+				<textarea class="form-control border-input" msd-elastic placeholder="Add notes for this section" name="section_notes" ng-model="vm.plan.section_notes"></textarea>
+			</div>
+		</div>
+		<div class="row">
+			<div class="form-group col-md-6">
+				<label for="plan_file">Section Materials</label>
+				<div class="form-control">
+					<div class="btn btn-fill btn-info border-input img-select" 
+						ngf-select ng-model="vm.plan.files" 
+						name="file" 
+						ngf-pattern="'image/*,audio/*,video/*,application/pdf,.pdf,.doc,.docx,.xls,.xlsx'" 
+						ngf-accept="'image/*,audio/*,video/*,application/pdf'" 
+						ngf-max-size="100MB" 
+						ngf-min-height="100" 
+						ngf-resize="{width: 300, height: 300}"
+						ngf-multiple="true">
+						<i ng-hide="fileProgress < 100" class="ti-clip"/>
+						<span ng-show="fileProgress < 100">{{fileProgress}}%</span>
+					</div>
+					<small class="center-block margin-tb-5" ng-repeat="file in vm.plan.files">
+						<span ng-if="file.$ngfName">{{file.$ngfName}}</span>
+						<span ng-if="!file.$ngfName">{{file.name}}</span>
+					</small>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="">
+					<ul class="" ng-if="vm.plan_files.length >0">
+						<li class="center-block margin-tb-5" ng-repeat="plan_file in vm.plan_files">
+							<a href="{{vm.path}}{{file.plan_file}}" target="_blank">{{plan_file.plan_file}}</a>
+							<button type="button" class="btn btn-danger btn-link" ng-click="vm.removePlanFile(plan_file)"><i class="ti-trash"/></button>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12 center-block text-center margin-10">
+				<button class="btn btn-danger margin-10" type="button" ng-click="vm.closeModal()">Cancel</button>
+				<button class="btn btn-primary margin-10" type="submit">Submit</button>
+			</div>
+		</div>
+	</form>
+
+	<div class="col-md-12" ng-if="!vm.edit">
+		<div class="row">
+			<div class="form-group col-md-2 text-center">
+				<label class="" for="section_week">Week</label>
+				<p class="">{{vm.plan.section_week}}</p>
+			</div>
+			<div class="form-group col-md-2 text-center">
+				<label class="" for="section_number">Section</label>
+				<p class="">{{vm.plan.section_number}}</p>
+			</div>
+		</div>
+		<div class="row">
+			<div class="form-group col-md-12 display-block text-center">
+				<h3 class="text-dk-blue center-block">{{vm.plan.section_title}}</h3>
+				<h5 class="text-default center-block margin-10">{{vm.plan.section_description}}</h5>
+			</div>
+		</div>
+		<div class="row">
+			<div class="form-group col-md-12">
+				<p class="center-block padding-10 message-content well" ng-bind-html="vm.plan.section_notes | linky:'_blank'"></p>
+			</div>
+		</div>
+		<div class="row" ng-if="vm.plan.plan_section_file.length >0">
+			<div class="col-md-6 margin-10">
+				<label for="plan_section_file">Plan Materials</label>
+				<ul>
+					<li class="center-block margin-tb-5 message-content" ng-repeat="file in vm.plan.plan_section_file"><a href="{{vm.path}}{{file.plan_file}}" target="_blank">{{file.plan_file}}</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12 center-block text-center margin-10">
+				<button class="btn btn-info margin-10" type="button" ng-click="vm.closeModal()">Close</button>
+			</div>
+		</div>
+	</div>
+
+</div>

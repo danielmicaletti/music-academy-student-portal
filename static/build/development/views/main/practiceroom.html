@@ -1,0 +1,22 @@
+
+<div class="row">
+	<div class="col-md-4 col-md-offset-4 text-center">
+		<h2 class="title margin-tb-10 animated fadeIn">Practice Room</h2>
+		<p class="category margin-tb-20 animated bounceInDown">for <a ui-sref="app.profile({userId:vm.user.id})">{{vm.user.first_name}} {{vm.user.last_name}}</a></p>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-12">
+		<stop-watch path="path"></stop-watch>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-12">
+		<student-objective user-id="vm.user.id" objectives="vm.user.student_objective" auth-acct="vm.authAcct" temp-type="dash"></student-objective>
+	</div>
+	<div class="col-md-12">
+		<student-practice-log user-id="vm.user.id" practice-logs="vm.user.student_log" temp-type="dash"></student-practice-log>
+	</div>
+</div>

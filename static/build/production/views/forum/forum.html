@@ -1,0 +1,40 @@
+
+<div class="row" ng-if="vm.authAcct.is_staff">
+    <div class="col-md-3">
+        <p>Back to <a ui-sref="app.dashboard({userId:vm.user.id})">Dashboard</a></p>
+    </div>
+</div>
+
+<div class="row">
+	<div class="col-md-12 text-center">
+		<h2 class="title margin-tb-10 animated fadeIn">Forum</h2>
+		<p class="category margin-tb-20 animated bounceInDown">for <a ui-sref="app.profile({userId:vm.user.id})">{{vm.user.first_name}} {{vm.user.last_name}}</a></p>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-12">
+		
+		<div class="card animated fadeIn">
+
+		    <div class="header row">
+		        <h4 class="title col-md-6">Forum</h4>
+		        <p class="category col-md-7">Ask a question, show off something you've been working on, share your favorite clips, or just talk with other students. This is one of the coolest communities out there so jump in!</p>
+		        <div class="col-md-12">
+		        	<h5 class="center-block">Forum Categories</h5>
+		        	<ul>
+		        		<li ng-repeat="category in vm.categories" class="col-md-3 padding-10">
+		        			<button type="button" class="btn btn-success btn-block btn-fill border-r-5 btn-long" ng-click="vm.setCategory(category);"><h5>{{category.category}}</h5></button>
+		        		</li>
+		        	</ul>
+		        </div>
+		    </div>
+
+		    <div class="content" ng-if="vm.category">
+				<forum-discussion user-id="vm.user.id" category="vm.category" path="path.media" play-level-color="playLevelColor"></forum-discussion>
+		    </div>
+
+		</div>
+
+	</div>
+</div>

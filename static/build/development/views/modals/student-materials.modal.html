@@ -1,0 +1,54 @@
+
+<div class="modal-header">
+	<h3 class="modal-title">{{vm.modalTitle}}</h3>
+	<small ng-if="vm.hasGroup">Added by: <span class="text-success">{{vm.newMaterial.material_added_by.first_name}} {{vm.newMaterial.material_added_by.last_name}}</span></small>
+</div>
+
+<div class="modal-body row">
+	<div class="col-md-12 form-group" ng-if="vm.authAcct.is_staff">
+		<label class="" for="student_group">Select Students</label>
+		<ui-select class="form-control border-input" multiple ng-model="vm.newMaterial.student_group" theme="bootstrap" sortable="true" close-on-select="false" style="width: 800px;">
+			<ui-select-match placeholder=" Select students...">{{$item.first_name}} {{$item.last_name}}&lt;{{$item.email}}&gt;</ui-select-match>
+			<ui-select-choices repeat="person.id as person in vm.allUsers | filter: $select.search">
+				<div>
+					<div ng-bind-html="person.name | highlight: $select.search"></div>
+					<small>
+					{{person.first_name}} {{person.last_name}}
+					email: <span ng-bind-html="''+person.email | highlight: $select.search"></span>
+					</small>
+				</div>
+			</ui-select-choices>
+		</ui-select>
+	</div>
+	<form name="newMaterialForm" ng-submit="vm.submitMaterial(vm.newMaterial)" novalidate>
+		<div class="form-group col-md-6">
+			<label class="" for="material_name">Material Name</label>
+			<input type="text" name="material_name" class="form-control border-input" placeholder="Material Name" ng-model="vm.newMaterial.material_name" ng-maxlength="50" ng-disabled="!vm.authAcct.is_staff && vm.hasGroup"/>
+			<small ng-show="newMaterialForm.material_name.$invalid && !newMaterialForm.material_name.$pristine" class="help-block text-danger">50 character limit</small>
+		</div>
+		<div class="form-group col-md-3">
+			<label class="" for="material">File</label>
+			<div class="btn btn-fill btn-info form-control border-input img-select" 
+				ngf-select ng-model="vm.newMaterial.file" 
+				name="file" 
+				ngf-pattern="'image/*,audio/*,video/*,application/pdf,.pdf,.doc,.docx,.xls,.xlsx'" ngf-accept="'image/*,audio/*,video/*,application/pdf'" 
+				ngf-max-size="100MB" 
+				ngf-min-height="100" 
+				ngf-resize="{width: 300, height: 300}"
+				ng-if="vm.authAcct.is_staff || !vm.hasGroup" required>
+				<i ng-hide="vm.fileProgress < 100" class="ti-file"/>
+				<span ng-show="vm.fileProgress < 100">{{vm.fileProgress}} %</span>
+			</div>
+			<small class="center-block margin-tb-5"><span ng-if="vm.newMaterial.file.$ngfName">{{vm.newMaterial.file.$ngfName}}</span><span ng-if="!vm.newMaterial.file.$ngfName && vm.newMaterial.file.name">{{vm.newMaterial.file.name}}</span><span ng-if="!vm.newMaterial.file.$ngfName && !vm.newMaterial.file.name"><a href="{{vm.path}}{{vm.newMaterial.file}}" target="_blank">{{vm.newMaterial.file}}</a></span></small>
+		</div>
+		<div class="form-group col-md-12">
+			<label for="material_notes">Material Notes</label>
+			<textarea class="form-control border-input" rows="2" placeholder="Material Notes" name="material_notes" ng-model="vm.newMaterial.material_notes" ng-disabled="!vm.authAcct.is_staff && vm.hasGroup"></textarea>
+		</div>
+		<div class="col-md-6">
+			<button class="btn btn-danger margin-10" type="button" ng-click="vm.closeModal()">Cancel</button>
+			<button class="btn btn-primary margin-10" type="submit" ng-if="vm.authAcct.is_staff || !vm.hasGroup" ng-disabled="newMaterialForm.$invalid">Submit</button>		
+		</div>
+	</form>
+
+</div>

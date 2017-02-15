@@ -1,0 +1,55 @@
+
+<div class="modal-header row" ng-class="{'bg-info': vm.courseType == 'new', 'bg-success': vm.courseType == 'sched'}">
+	<h3 class="modal-title col-md-6" ng-if="!vm.user.is_admin && vm.courseType == 'new'">Schedule a Class</h3>
+	<h3 class="modal-title col-md-6" ng-if="vm.user.is_admin && vm.courseType == 'new'">Available Class</h3>
+	<h3 class="modal-title col-md-6" ng-if="vm.courseType == 'sched'">Scheduled Class</h3>
+	<div class="col-md-6" ng-if="!vm.user.is_admin && vm.needCredit && vm.courseType == 'new'">
+		<p class="text-danger">You don't have enough credits to schedule this class.</p>
+	</div>
+</div>
+
+<div class="modal-body row">
+		<div class="col-md-12 margin-tb-10">
+			<h4 class="text-center">{{vm.course.course_title}}</h4>
+			<p class="text-center">{{vm.course.course_location.name}}</p>
+		</div>
+		<div class="col-md-12 margin-tb-10">
+			<h5 class="text-center">{{vm.course.course_subtitle}}</h5>
+		</div>
+		<div class="col-md-12 margin-tb-10 text-center">
+			<p class="">Credits: {{vm.course.course_credit}}</p>
+		</div>
+		<div class="col-md-4 text-center margin-tb-10">
+			<label for="schedule_date"">Class Date</label>
+			<p class="">{{vm.date.date | date: "MMMM d, y"}}</p>
+		</div>
+		<div class="col-md-4 text-center margin-tb-10">
+			<label class="" for="course_start_time">Class Start</label>
+			<p class="">{{vm.getTime(vm.date.courseStart) | date: "h:mm a"}}</p>
+		</div>
+		<div class="col-md-4 text-center margin-tb-10">
+			<label class="" for="course_end_time">Class End</label>
+			<p class="">{{vm.getTime(vm.date.courseEnd) | date: "h:mm a"}}</p>
+		</div>
+		<div class="col-md-6 text-center margin-tb-10" ng-if="vm.user.is_admin && vm.courseType == 'sched'">
+			<label class="" for="scheduled_students">Scheduled Students <small class="text-primary">({{vm.schedType.scheduledCourse.student.length}})</small></label>
+			<p ng-repeat="student in vm.schedType.scheduledCourse.student"><a ui-sref="app.profile({userId:student.id})" ng-click="vm.closeModal()">{{student.first_name}} {{student.last_name}}</a></p>
+		</div>
+		<div class="col-md-6 text-center margin-tb-10" ng-if="vm.user.is_admin">
+			<label class="" for="scheduled_students">Class Student Max</label>
+			<p>{{vm.course.max_student}}</p>
+		</div>
+		<div class="col-md-12 text-center margin-tb-10" ng-if="!vm.user.is_admin">
+			<small class="text-warning">All Course Credits refunded if course canceled more than 24 hours in advance</p>
+		</div>
+		<div class="col-md-12 text-center margin-tb-10">
+
+			<button class="btn btn-primary margin-10" type="button" ng-click="vm.closeModal()">Close</button>
+			<button class="btn btn-success margin-10" type="button" ng-click="vm.addClass();" ng-disabled="vm.needCredit" ng-if="!vm.user.is_admin && vm.courseType == 'new'">Add Class</button>
+			<button class="btn btn-danger btn-fill margin-10" type="button" ng-click="vm.addClass();" ng-if="!vm.user.is_admin && vm.courseType == 'sched'">Cancel Class</button>
+			<span class="" ng-if="!vm.needCredit">
+				<input class="" type="checkbox" name="reschedule" data-toggle="checkbox" value="" ng-model="vm.newClass.recurring">  Reschedule weekly
+			</span>
+		</div>
+
+</div>

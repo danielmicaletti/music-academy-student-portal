@@ -1,0 +1,126 @@
+
+<div class="row">
+	<div class="col-md-12 text-center">
+		<h2 class="title margin-tb-10 animated fadeIn">Student Leaderboard</h2>
+		<p class="category margin-tb-20 animated bounceInDown">for <a ui-sref="app.profile({userId:vm.user.id})" class="">{{vm.user.first_name}} {{vm.user.last_name}}</a></p>
+	</div>
+</div>
+
+<div class="row animated fadeIn">
+	<div class="col-md-12">
+
+		<div class="card">
+
+		    <div class="header row">
+		        <!-- <h4 class="title col-md-6">Leaderboard</h4> -->
+		        <p class="category col-md-7">See how your progress compares with other students!</p>
+		        <div class="col-md-8 padding-top-20">
+					<div ng-if="vm.authAcct.is_staff">
+						<small class="center-block margin-tb-10">Students</small>
+						<button class="btn btn-sm btn-success" ng-class="{active: vm.showInactive === true}" ng-click="vm.showInactive = true">Active</button>
+						<button class="btn btn-sm btn-danger" ng-click="vm.showInactive = false" ng-class="{active: vm.showInactive === false}">Inactive</button>
+						<button class="btn btn-sm btn-info" ng-class="{active: vm.showInactive === ''}" ng-click="vm.showInactive = ''">All</button>
+					</div>
+		        	<p class="center-block margin-top-10">Total Students: <span class="text-success" ng-cloak>{{filterData.length}}</span><small>
+		        </div>
+		        <div class="col-md-4" ng-if="!vm.loading">
+					<form class="center-block">
+						<div class="form-group padding-10">
+							<div class="input-group">
+								<div class="input-group-addon border"><i class="fa fa-search"></i></div>
+								<input type="text" class="form-control border-input" placeholder="Search" ng-model="vm.searchItem">
+							</div>      
+						</div>
+					</form>
+					<div class="form-group center-block margin-top-10">
+						<label>Students per page: </label>
+						<select class="border-input" ng-model="vm.viewby" ng-change="vm.setItemsPerPage(vm.viewby)">
+							<option value="10">10</option>
+							<option value="20">20</option>
+							<option value="30">30</option>
+							<option value="40">40</option>
+							<option value="50">50</option>
+						</select>
+					</div>	
+					<div ng-click="sortType = '-practice_time_total';">
+						<button type="buttom" class="btn btn-success btn-sm" ng-class="{active: vm.rangeBy === 'week'}" ng-click="vm.getRange('week')">Current Week</button>
+						<button type="buttom" class="btn btn-success btn-sm" ng-class="{active: vm.rangeBy === 'month'}" ng-click="vm.getRange('month')">Current Month</button>
+						<button type="buttom" class="btn btn-success btn-sm" ng-class="{active: vm.rangeBy === 'all'}" ng-click="vm.getRange('all')">All</button>
+					</div>		        	
+		        </div>
+		    </div>
+
+		    <div class="content table-responsive table-full-width">
+
+		        <table class="table table-hover">
+
+		            <thead class="text-center">
+		            	<th></th>
+		                <th class="text-center">
+		                	<a href="javascript:void(0)" ng-click="sortType = 'first_name'; sortReverse = !sortReverse">Student <span ng-show="sortType == 'first_name' && !sortReverse" class="fa fa-caret-down"></span><span ng-show="sortType == 'first_name' && sortReverse" class="fa fa-caret-up"></span></a>
+		         
+		          		</th>
+		                <th class="text-center">
+		                	<a href="javascript:void(0)" ng-click="sortType = 'play_level'; sortReverse = !sortReverse">Play Level <span ng-show="sortType == 'play_level' && !sortReverse" class="fa fa-caret-down"></span><span ng-show="sortType == 'play_level' && sortReverse" class="fa fa-caret-up"></span></a>
+		          		</th>
+		                <th class="text-center">
+		                	<a href="javascript:void(0)" ng-click="sortType = 'practice_speed_high'; sortReverse = !sortReverse">High Speed <span ng-show="sortType == 'practice_speed_high' && !sortReverse" class="fa fa-caret-down"></span><span ng-show="sortType == 'practice_speed_high' && sortReverse" class="fa fa-caret-up"></span></a>
+		          		</th>
+		                <th class="text-center">
+		                	<a href="javascript:void(0)" ng-click="sortType = 'practice_speed_avg'; sortReverse = !sortReverse">Avg Speed <span ng-show="sortType == 'practice_speed_avg' && !sortReverse" class="fa fa-caret-down"></span><span ng-show="sortType == 'practice_speed_avg' && sortReverse" class="fa fa-caret-up"></span></a>
+		          		</th>
+		                <th class="text-center">
+		                	<a href="javascript:void(0)" ng-click="sortType = 'practice_time_total'; sortReverse = !sortReverse">Total Practice Time <span ng-show="sortType == 'practice_time_total' && !sortReverse" class="fa fa-caret-down"></span><span ng-show="sortType == 'practice_time_total' && sortReverse" class="fa fa-caret-up"></span></a>
+		          		</th>
+		                <th class="text-center">
+		                	<a href="javascript:void(0)" ng-click="sortType = 'practice_time_avg'; sortReverse = !sortReverse">Avg Daily Practice <span ng-show="sortType == 'practice_time_avg' && !sortReverse" class="fa fa-caret-down"></span><span ng-show="sortType == 'practice_time_avg' && sortReverse" class="fa fa-caret-up"></span></a>
+		          		</th>
+		                <th class="text-center">
+		                	<a href="javascript:void(0)" ng-click="sortType = 'goals_complete'; sortReverse = !sortReverse">Goals Complete <span ng-show="sortType == 'goals_complete' && !sortReverse" class="fa fa-caret-down"></span><span ng-show="sortType == 'goals_complete' && sortReverse" class="fa fa-caret-up"></span></a>
+		          		</th>
+		                <th class="text-center">
+		                	<a href="javascript:void(0)" ng-click="sortType = 'objectives_complete'; sortReverse = !sortReverse">Practice Items Complete <span ng-show="sortType == 'objectives_complete' && !sortReverse" class="fa fa-caret-down"></span><span ng-show="sortType == 'objectives_complete' && sortReverse" class="fa fa-caret-up"></span></a>
+		          		</th>
+		                <th class="text-center">
+		                	<a href="javascript:void(0)" ng-click="sortType = 'wishes_complete'; sortReverse = !sortReverse">Songs Complete <span ng-show="sortType == 'wishes_complete' && !sortReverse" class="fa fa-caret-down"></span><span ng-show="sortType == 'wishes_complete' && sortReverse" class="fa fa-caret-up"></span></a>
+		          		</th>
+		            </thead>
+
+		            <tbody>
+						<tr class="text-center" ng-repeat="leader in filterData = (vm.leaderBoard | filter : vm.searchItem | filter : {is_active: vm.showInactive}) | orderBy: '-practice_time_total' | orderBy: sortType:sortReverse | limitTo:vm.itemsPerPage:vm.itemsPerPage*(vm.currentPage-1)" ng-hide="!leader.is_active && !vm.authAcct.is_staff" ng-class="{'bg-danger': !leader.is_active}" ng-if="!vm.loading">
+							<td class="width-5">{{$index + 1}}</td>
+							<td class="width-10">
+								<a ng-if="vm.authAcct.is_staff" ui-sref="app.dashboard({userId:leader.id})">{{leader.first_name}} {{leader.last_name}}</a>
+								<span ng-if="!vm.authAcct.is_staff">{{leader.first_name}} {{leader.last_name}}</span>
+							</td>
+							<td class="width-10"><div class="center-block col-md-12 height-20 border padding-10" ng-class="playLevelColor[leader.play_level]"></div>
+							</td>
+							<td class="width-10">{{leader.practice_speed_high | number:0}} <span> npm</span></td>
+							<td class="width-10">{{leader.practice_speed_avg | number:0}} <span> npm</span></td>
+							<td class="width-15">{{leader.practice_time_total}}<span> mins</span>
+								<small class="col-md-12">Last:<br/> {{leader.last_practice_date | date:"MMM d, y"}}</small>
+							</td>
+							<td class="width-10">{{leader.practice_time_avg | number:0}} <span> mins</span></td>
+							<td class="width-10">{{leader.goals_complete}}</td>
+							<td class="width-10">{{leader.objectives_complete}}</td>
+							<td class="width-10">{{leader.wishes_complete}}</td>
+						</tr>
+						<tr ng-if="!vm.loading && practiceLogs.length < 1">
+							<td colspan="9" class="text-warning text-center">No Leaders!</td>
+						</tr>
+						<tr ng-if="vm.loading">
+							<td class="text-center" colspan="9"><span class="text-lg"><i class="fa fa-refresh fa-spin text-danger"/> Loading Leaderboard...</span></td>
+						</tr>
+		            </tbody>
+
+		        </table>
+		    </div>
+	        <div class="row" ng-if="!vm.loading">
+	        	<div class="col-md-12 text-center">
+					<ul uib-pagination total-items="filterData.length" ng-model="vm.currentPage" items-per-page="vm.itemsPerPage" max-size="vm.maxSize" class="pagination-sm" boundary-link-numbers="true" rotate="false"></ul>
+	        	</div>
+	        </div>
+		</div>
+
+	</div>
+</div>

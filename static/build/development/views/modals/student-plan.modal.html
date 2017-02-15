@@ -1,0 +1,46 @@
+
+<div class="modal-header">
+	<h3 class="modal-title">{{vm.modalTitle}} Student Plan</h3>
+	<button class="btn btn-danger btn-fill margin-10" type="button" ng-click="vm.removePlan(vm.plan); vm.closeModal();" ng-if="selectedPlan.id"><i class="ti-trash"/> Delete Plan</button>
+</div>
+
+<div class="modal-body row">
+	<form class="col-md-12" ng-submit="vm.submitPlan(vm.plan)" ng-if="vm.authAcct.is_staff && vm.edit" novalidate>
+		<div class="row">
+			<div class="form-group col-md-6 center-block">
+				<label for="plan_title">Plan Title</label>
+				<input type="text" name="plan_title" class="form-control border-input" ng-model="vm.plan.plan_title"/>
+			</div>
+		</div>
+		<div class="row">
+			<div class="form-group col-md-8">
+				<label for="plan_description">Plan Description</label>
+				<input type="text" name="plan_description" class="form-control border-input" ng-model="vm.plan.plan_description"/>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<label class="" for="students">Students</label>
+				<ui-select class="form-control border-input" multiple ng-model="vm.plan.plan_student" theme="bootstrap" sortable="true" close-on-select="false" >
+					<ui-select-match placeholder=" Select students...">{{$item.first_name}} {{$item.last_name}}&lt;{{$item.email}}&gt;</ui-select-match>
+					<ui-select-choices repeat="person.id as person in vm.allUsers | filter: $select.search">
+						<div>
+							<div ng-bind-html="person.name | highlight: $select.search"></div>
+							<small>
+							{{person.first_name}} {{person.last_name}}
+							email: <span ng-bind-html="''+person.email | highlight: $select.search"></span>
+							</small>
+						</div>
+					</ui-select-choices>
+				</ui-select>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12 center-block text-center margin-10">
+				<button class="btn btn-danger margin-10" type="button" ng-click="vm.closeModal()">Cancel</button>
+				<button class="btn btn-primary margin-10" type="submit">Submit</button>
+			</div>
+		</div>
+	</form>
+
+</div>
