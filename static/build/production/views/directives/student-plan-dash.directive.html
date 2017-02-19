@@ -20,18 +20,18 @@
 				<button class="btn btn-link btn-warning" ng-click="openPlan(selectedPlan, true);"><i class="ti-pencil"/></button>
 			</div>
 			<div class="center-block">
-				<button class="btn btn-link btn-info" ng-click="openPlan({}, true);"><i class="ti-plus"/></button>
+				<button class="btn btn-link btn-success" uib-tooltip="New Plan" tooltip-popup-delay='300' ng-click="openPlan({}, true);"><i class="ti-plus"/></button>
 			</div>	
         </div>
 		<div class="col-md-3" ng-if="selectedPlan.id">
- 	       <button class="btn btn-sm btn-primary" ng-click="openSection({}, true);"><i class="ti-plus"/> Add Section</button>
+ 	       <button class="btn btn-sm btn-info" ng-click="openSection({}, true);"><i class="ti-plus"/> Add Section</button>
         </div>
     </div>
 
     <div class="content">
     	<div class="row margin-bottom-10">
     		<div class="col-md-12 text-center" ng-show="selectedPlan">
-    			<h5 class="text-dk-blue margin-0">{{selectedPlan.plan_title}}</h5>
+    			<h5 class="text-warning margin-0">{{selectedPlan.plan_title}}</h5>
     			<small>{{selectedPlan.plan_description}}</small>
     		</div>
     		<div class="col-md-12 text-center" ng-if="!selectedPlan && authAcct.is_staff">

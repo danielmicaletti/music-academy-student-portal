@@ -1,5 +1,5 @@
 
-<div class="modal-header row" ng-class="{'bg-info': vm.courseType == 'new', 'bg-success': vm.courseType == 'sched'}">
+<div class="modal-header row" ng-class="{'bg-blue': vm.courseType == 'new', 'bg-success': vm.courseType == 'sched'}">
 	<h3 class="modal-title col-md-6" ng-if="!vm.user.is_admin && vm.courseType == 'new'">Schedule a Class</h3>
 	<h3 class="modal-title col-md-6" ng-if="vm.user.is_admin && vm.courseType == 'new'">Available Class</h3>
 	<h3 class="modal-title col-md-6" ng-if="vm.courseType == 'sched'">Scheduled Class</h3>

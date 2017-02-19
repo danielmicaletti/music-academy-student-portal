@@ -28,18 +28,18 @@
 		<div ng-class="messageClass">
 			<h3 class="text-center text-danger">{{messages.topic}}</h3>
 			<ul>
-				<li ng-repeat="message in messages.topic_message" class="row border border-r-10 margin-10 main-bg-color">
+				<li ng-repeat="message in messages.topic_message" class="row border border-r-10 margin-10">
 					<div class="col-md-3 padding-10">
 						<img ng-src="{{path}}{{message.message_user.user_pic}}" alt="{{message.message_user.first_name}} {{message.message_user.last_name}} profile" class="img-circle wh-30 border-white"/>
 						<small class="padding-10 text-center">{{message.message_user.first_name}} {{message.message_user.last_name}}</small>
-						<small class="center-block text-center text-primary">Play Level</small>
+						<small class="center-block text-center text-yellow">Play Level</small>
 						<div class="center-block height-20 border padding-10" ng-class="playLevelColor[message.message_user.play_level]"></div>
 						<div class="center-block">
-							<small class="text-primary">Current Goal: </small>
+							<small class="text-yellow">Current Goal: </small>
 							<small class=""> {{message.message_user.recent_goal.goal}}</small>
 						</div>
 						<div class="center-block">
-						<small class="text-primary">Target Date: </small>
+						<small class="text-yellow">Target Date: </small>
 						<small class="center-block">{{message.message_user.recent_goal.goal_target_date | date:"MMM d, y"}}</small>
 						</div>
 					</div>
@@ -75,7 +75,7 @@
 
 				</div>
 				<div class="form-group col-md-3">
-					<button type="button" class="btn btn-primary" ng-disabled="!newMessage.message.length" ng-click="addMessage(newMessage, messages.id)">Submit</button>
+					<button type="button" class="btn btn-success" ng-disabled="!newMessage.message.length" ng-click="addMessage(newMessage, messages.id)">Submit</button>
 				</div>
 			</div>			
 		</div>

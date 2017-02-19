@@ -4,7 +4,7 @@
         <div class="card">
             <div class="header row">
             	<div class="col-md-12">
-            		<i class="ti-time text-success margin-right-10"/><h4 class="title inline-flex"><span class="text-info"> Timer</span></h4>
+            		<i class="ti-time text-success margin-right-10"/><h4 class="title inline-flex"><span class="text-yellow"> Timer</span></h4>
             	</div>
             </div>
 
@@ -23,7 +23,7 @@
                                 </select>                        
                             </div>
                             <div class="col-md-2 margin-10 text-center">
-                                <button class="btn btn-sm btn-default" ng-click="setTime(setHours, setMinutes);">Set Time</button>
+                                <button class="btn btn-sm btn-warning" ng-click="setTime(setHours, setMinutes);">Set Time</button>
                             </div>
                         </div>
                     </div>
@@ -45,7 +45,7 @@
             <div class="header row">
                 <div class="col-md-12">
                     <div class="">
-                        <i class="ti-pulse text-danger margin-right-10"/><h4 class="title inline-flex"><span class="text-info">Metronome</span></h4>
+                        <i class="ti-pulse text-danger margin-right-10"/><h4 class="title inline-flex"><span class="text-yellow">Metronome</span></h4>
                     </div>
                 </div>
             </div>
@@ -71,7 +71,7 @@
         							<label class="" for="bpm">Beats per Minute</label>
         							<input type="text" name="bpm" class="form-control border-input" ng-model="bpm"/>
         							<button type="button" name="bpmPlus" class="btn btn-sm btn-info margin-5" ng-click="bpmPlus(bpm);"><i class="ti-plus"/></button>
-        							<button type="button" name="bpmMinus" class="btn btn-sm btn-default margin-5" ng-click="bpmMinus(bpm);"><i class="ti-minus"/></button>
+        							<button type="button" name="bpmMinus" class="btn btn-sm btn-warning margin-5" ng-click="bpmMinus(bpm);"><i class="ti-minus"/></button>
         						</div>
                             </div>
                             <div class="col-md-6">
@@ -79,7 +79,7 @@
         							<label for="bpm">Beats per Bar</label>
         							<input type="text" name="bpb" class="form-control border-input" ng-model="bpb"/>
         							<button type="button" name="bpbPlus" class="btn btn-sm btn-info margin-5" ng-click="bpbPlus(bpb);"><i class="ti-plus"/></button>
-        							<button type="button" name="bpbMinus" class="btn btn-sm btn-default margin-5" ng-click="bpbMinus(bpb);"><i class="ti-minus"/></button>
+        							<button type="button" name="bpbMinus" class="btn btn-sm btn-warning margin-5" ng-click="bpbMinus(bpb);"><i class="ti-minus"/></button>
         						</div>
         					</div>
 

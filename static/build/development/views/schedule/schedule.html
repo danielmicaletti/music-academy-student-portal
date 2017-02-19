@@ -25,7 +25,7 @@
 
 		    <div class="row" ng-if="!vm.authAcct.is_staff">
 		    	<div class="col-md-12 text-center">
-		    		<button class="btn btn-info margin-10" ng-click="vm.isCollapsed = !vm.isCollapsed">Available Classes</button>
+		    		<button class="btn btn-warning margin-10" ng-click="vm.isCollapsed = !vm.isCollapsed">Available Classes</button>
 		    	</div>
 		    </div>
 
@@ -39,21 +39,21 @@
 					<div class="col-md-6 text-center margin-tb-10">
 						<div class="btn-group">
 							<button
-								class="btn btn-primary"
+								class="btn btn-warning"
 								mwl-date-modifier
 								date="vm.calendarDate"
 								decrement="vm.calendarView">
 								Previous
 							</button>
 							<button
-								class="btn btn-default"
+								class="btn btn-yellow"
 								mwl-date-modifier
 								date="vm.calendarDate"
 								set-to-today>
 								Today
 							</button>
 							<button
-								class="btn btn-primary"
+								class="btn btn-success"
 								mwl-date-modifier
 								date="vm.calendarDate"
 								increment="vm.calendarView">
@@ -64,10 +64,10 @@
 
 					<div class="col-md-6 text-center margin-tb-10">
 						<div class="btn-group">
-							<label class="btn btn-primary" ng-model="vm.calendarView" uib-btn-radio="'year'">Year</label>
-							<label class="btn btn-primary" ng-model="vm.calendarView" uib-btn-radio="'month'">Month</label>
-							<label class="btn btn-primary" ng-model="vm.calendarView" uib-btn-radio="'week'">Week</label>
-							<label class="btn btn-primary" ng-model="vm.calendarView" uib-btn-radio="'day'">Day</label>
+							<label class="btn btn-yellow" ng-model="vm.calendarView" uib-btn-radio="'year'">Year</label>
+							<label class="btn btn-yellow" ng-model="vm.calendarView" uib-btn-radio="'month'">Month</label>
+							<label class="btn btn-yellow" ng-model="vm.calendarView" uib-btn-radio="'week'">Week</label>
+							<label class="btn btn-yellow" ng-model="vm.calendarView" uib-btn-radio="'day'">Day</label>
 						</div>
 					</div>
 				
@@ -94,12 +94,20 @@
 						<div class="table-responsive table-full-width">
 							<table class="table table-bordered">
 								<thead class="">
-									<th class="sched-table-width bg-warning" ng-repeat="day in vm.week | orderBy: 'date'"><small class="center-block">{{day.date | date:"EEEE"}}</small><small class="center-block">{{day.date | date:"MMMM d, y"}}</small></th>
+									<th class="sched-table-width" ng-repeat="day in vm.week | orderBy: 'date'"><small class="center-block">{{day.date | date:"EEEE"}}</small><small class="center-block">{{day.date | date:"MMMM d, y"}}</small></th>
 								</thead>
 								<tbody>
-									<tr class="well animated" ng-class="{ 'fadeIn': !vm.isCollapsed, 'fadeOut': vm.isCollapsed }" uib-collapse="vm.isCollapsed" ng-if="vm.availCourses.length">
+									<tr class="animated" ng-class="{ 'fadeIn': !vm.isCollapsed, 'fadeOut': vm.isCollapsed }" uib-collapse="vm.isCollapsed" ng-if="vm.availCourses.length">
 										<td class="sched-table-width">
-											<div class="border center-block padding-5 margin-tb-5 bg-info border-r-5 avail-class" ng-repeat="course in vm.availCourses | orderBy: 'start'" ng-if="course.day === vm.week[0].day && vm.isDay(course.start)" ng-click="vm.open({'date':vm.week[0].date, 'courseStart':course.start, 'courseEnd': course.end}, course.course, vm.user, {'courseType':'new'});">
+											<div class="border center-block padding-5 margin-tb-5 bg-yellow text-charcoal border-r-5 avail-class" ng-repeat="course in vm.availCourses | orderBy: 'start'" ng-if="course.day === vm.week[0].day && vm.isDay(course.start)" ng-click="vm.open({'date':vm.week[0].date, 'courseStart':course.start, 'courseEnd': course.end}, course.course, vm.user, {'courseType':'new'});">
+												<span class="center-block table-time border-bottom padding-tb-5">{{course.start | date: 'h:mm a' }} - {{course.end | date: 'h:mm a' }}</span>
+												<span class="center-block padding-tb-5 text-charcoal">{{course.course.course_title}}</span>
+												<span ng-if="course.course.course_location"><small>{{course.course.course_location.name}}</small></span>
+												<span class="center-block padding-tb-5 border-top"><small>Credits: {{course.course.course_credit}}</small></span>
+											</div>
+										</td>
+										<td class="sched-table-width">
+											<div class="border center-block padding-5 margin-tb-5 bg-yellow text-charcoal border-r-5 avail-class" ng-repeat="course in vm.availCourses | orderBy: 'start'" ng-if="course.day === vm.week[1].day" ng-click="vm.open({'date':vm.week[1].date, 'courseStart':course.start, 'courseEnd': course.end}, course.course, vm.user, {'courseType':'new'});">
 												<span class="center-block table-time border-bottom padding-tb-5">{{course.start | date: 'h:mm a' }} - {{course.end | date: 'h:mm a' }}</span>
 												<span class="center-block padding-tb-5">{{course.course.course_title}}</span>
 												<span ng-if="course.course.course_location"><small>{{course.course.course_location.name}}</small></span>
@@ -107,7 +115,7 @@
 											</div>
 										</td>
 										<td class="sched-table-width">
-											<div class="border center-block padding-5 margin-tb-5 bg-info border-r-5 avail-class" ng-repeat="course in vm.availCourses | orderBy: 'start'" ng-if="course.day === vm.week[1].day" ng-click="vm.open({'date':vm.week[1].date, 'courseStart':course.start, 'courseEnd': course.end}, course.course, vm.user, {'courseType':'new'});">
+											<div class="border center-block padding-5 margin-tb-5 bg-yellow text-charcoal border-r-5 avail-class" ng-repeat="course in vm.availCourses | orderBy: 'start'" ng-if="course.day === vm.week[2].day" ng-click="vm.open({'date':vm.week[2].date, 'courseStart':course.start, 'courseEnd': course.end}, course.course, vm.user, {'courseType':'new'});">
 												<span class="center-block table-time border-bottom padding-tb-5">{{course.start | date: 'h:mm a' }} - {{course.end | date: 'h:mm a' }}</span>
 												<span class="center-block padding-tb-5">{{course.course.course_title}}</span>
 												<span ng-if="course.course.course_location"><small>{{course.course.course_location.name}}</small></span>
@@ -115,7 +123,7 @@
 											</div>
 										</td>
 										<td class="sched-table-width">
-											<div class="border center-block padding-5 margin-tb-5 bg-info border-r-5 avail-class" ng-repeat="course in vm.availCourses | orderBy: 'start'" ng-if="course.day === vm.week[2].day" ng-click="vm.open({'date':vm.week[2].date, 'courseStart':course.start, 'courseEnd': course.end}, course.course, vm.user, {'courseType':'new'});">
+											<div class="border center-block padding-5 margin-tb-5 bg-yellow text-charcoal border-r-5 avail-class" ng-repeat="course in vm.availCourses | orderBy: 'start'" ng-if="course.day === vm.week[3].day" ng-click="vm.open({'date':vm.week[3].date, 'courseStart':course.start, 'courseEnd': course.end}, course.course, vm.user, {'courseType':'new'});">
 												<span class="center-block table-time border-bottom padding-tb-5">{{course.start | date: 'h:mm a' }} - {{course.end | date: 'h:mm a' }}</span>
 												<span class="center-block padding-tb-5">{{course.course.course_title}}</span>
 												<span ng-if="course.course.course_location"><small>{{course.course.course_location.name}}</small></span>
@@ -123,7 +131,7 @@
 											</div>
 										</td>
 										<td class="sched-table-width">
-											<div class="border center-block padding-5 margin-tb-5 bg-info border-r-5 avail-class" ng-repeat="course in vm.availCourses | orderBy: 'start'" ng-if="course.day === vm.week[3].day" ng-click="vm.open({'date':vm.week[3].date, 'courseStart':course.start, 'courseEnd': course.end}, course.course, vm.user, {'courseType':'new'});">
+											<div class="border center-block padding-5 margin-tb-5 bg-yellow text-charcoal border-r-5 avail-class" ng-repeat="course in vm.availCourses | orderBy: 'start'" ng-if="course.day === vm.week[4].day" ng-click="vm.open({'date':vm.week[4].date, 'courseStart':course.start, 'courseEnd': course.end}, course.course, vm.user, {'courseType':'new'});">
 												<span class="center-block table-time border-bottom padding-tb-5">{{course.start | date: 'h:mm a' }} - {{course.end | date: 'h:mm a' }}</span>
 												<span class="center-block padding-tb-5">{{course.course.course_title}}</span>
 												<span ng-if="course.course.course_location"><small>{{course.course.course_location.name}}</small></span>
@@ -131,7 +139,7 @@
 											</div>
 										</td>
 										<td class="sched-table-width">
-											<div class="border center-block padding-5 margin-tb-5 bg-info border-r-5 avail-class" ng-repeat="course in vm.availCourses | orderBy: 'start'" ng-if="course.day === vm.week[4].day" ng-click="vm.open({'date':vm.week[4].date, 'courseStart':course.start, 'courseEnd': course.end}, course.course, vm.user, {'courseType':'new'});">
+											<div class="border center-block padding-5 margin-tb-5 bg-yellow text-charcoal border-r-5 avail-class" ng-repeat="course in vm.availCourses | orderBy: 'start'" ng-if="course.day === vm.week[5].day" ng-click="vm.open({'date':vm.week[5].date, 'courseStart':course.start, 'courseEnd': course.end}, course.course, vm.user, {'courseType':'new'});">
 												<span class="center-block table-time border-bottom padding-tb-5">{{course.start | date: 'h:mm a' }} - {{course.end | date: 'h:mm a' }}</span>
 												<span class="center-block padding-tb-5">{{course.course.course_title}}</span>
 												<span ng-if="course.course.course_location"><small>{{course.course.course_location.name}}</small></span>
@@ -139,15 +147,7 @@
 											</div>
 										</td>
 										<td class="sched-table-width">
-											<div class="border center-block padding-5 margin-tb-5 bg-info border-r-5 avail-class" ng-repeat="course in vm.availCourses | orderBy: 'start'" ng-if="course.day === vm.week[5].day" ng-click="vm.open({'date':vm.week[5].date, 'courseStart':course.start, 'courseEnd': course.end}, course.course, vm.user, {'courseType':'new'});">
-												<span class="center-block table-time border-bottom padding-tb-5">{{course.start | date: 'h:mm a' }} - {{course.end | date: 'h:mm a' }}</span>
-												<span class="center-block padding-tb-5">{{course.course.course_title}}</span>
-												<span ng-if="course.course.course_location"><small>{{course.course.course_location.name}}</small></span>
-												<span class="center-block padding-tb-5 border-top"><small>Credits: {{course.course.course_credit}}</small></span>
-											</div>
-										</td>
-										<td class="sched-table-width">
-											<div class="border center-block padding-5 margin-tb-5 bg-info border-r-5 avail-class" ng-repeat="course in vm.availCourses | orderBy: 'start'" ng-if="course.day === vm.week[6].day" ng-click="vm.open({'date':vm.week[6].date, 'courseStart':course.start, 'courseEnd': course.end}, course.course, vm.user, {'courseType':'new'});">
+											<div class="border center-block padding-5 margin-tb-5 bg-yellow text-charcoal border-r-5 avail-class" ng-repeat="course in vm.availCourses | orderBy: 'start'" ng-if="course.day === vm.week[6].day" ng-click="vm.open({'date':vm.week[6].date, 'courseStart':course.start, 'courseEnd': course.end}, course.course, vm.user, {'courseType':'new'});">
 												<span class="center-block table-time border-bottom padding-tb-5">{{course.start | date: 'h:mm a' }} - {{course.end | date: 'h:mm a' }}</span>
 												<span class="center-block padding-tb-5">{{course.course.course_title}}</span>
 												<span ng-if="course.course.course_location"><small>{{course.course.course_location.name}}</small></span>
@@ -163,7 +163,7 @@
 									</tr>
 									<tr ng-if="vm.schedule.length">
 										<td class="sched-table-width">
-											<div class="border center-block padding-5 margin-tb-5 bg-success border-r-5 sched-class" ng-repeat="schedCourse in vm.schedule" ng-if="vm.checkDate(vm.week[0].date, schedCourse.schedule_date)" ng-click="vm.open({'date':vm.week[0].date, 'courseStart':schedCourse.schedule_start_time, 'courseEnd': schedCourse.schedule_end_time}, schedCourse.course, vm.user, {'courseType':'sched', 'scheduledCourse': schedCourse})">
+											<div class="border center-block padding-5 margin-tb-5 bg-success text-charcoal border-r-5 sched-class" ng-repeat="schedCourse in vm.schedule" ng-if="vm.checkDate(vm.week[0].date, schedCourse.schedule_date)" ng-click="vm.open({'date':vm.week[0].date, 'courseStart':schedCourse.schedule_start_time, 'courseEnd': schedCourse.schedule_end_time}, schedCourse.course, vm.user, {'courseType':'sched', 'scheduledCourse': schedCourse})">
 												<span class="center-block table-time border-bottom padding-tb-5">{{ vm.getTime(schedCourse.schedule_start_time) }} - {{ vm.getTime(schedCourse.schedule_end_time) }}</span>
 												<span class="center-block padding-tb-5">{{schedCourse.course.course_title}}</span>
 												<span ng-if="schedCourse.course.course_location"><small>{{schedCourse.course.course_location.name}}</small></span>
@@ -171,7 +171,7 @@
 											</div>
 										</td>
 										<td class="sched-table-width">
-											<div class="border center-block padding-5 margin-tb-5 bg-success border-r-5 sched-class" ng-repeat="schedCourse in vm.schedule" ng-if="vm.checkDate(vm.week[1].date, schedCourse.schedule_date)" ng-click="vm.open({'date':vm.week[1].date, 'courseStart':schedCourse.schedule_start_time, 'courseEnd': schedCourse.schedule_end_time}, schedCourse.course, vm.user, {'courseType':'sched', 'scheduledCourse': schedCourse})">
+											<div class="border center-block padding-5 margin-tb-5 bg-success text-charcoal border-r-5 sched-class" ng-repeat="schedCourse in vm.schedule" ng-if="vm.checkDate(vm.week[1].date, schedCourse.schedule_date)" ng-click="vm.open({'date':vm.week[1].date, 'courseStart':schedCourse.schedule_start_time, 'courseEnd': schedCourse.schedule_end_time}, schedCourse.course, vm.user, {'courseType':'sched', 'scheduledCourse': schedCourse})">
 												<span class="center-block table-time border-bottom padding-tb-5">{{ vm.getTime(schedCourse.schedule_start_time) }} - {{ vm.getTime(schedCourse.schedule_end_time) }}</span>
 												<span class="center-block padding-tb-5">{{schedCourse.course.course_title}}</span>
 												<span ng-if="schedCourse.course.course_location"><small>{{schedCourse.course.course_location.name}}</small></span>
@@ -179,7 +179,7 @@
 											</div>
 										</td>
 										<td class="sched-table-width">
-											<div class="border center-block padding-5 margin-tb-5 bg-success border-r-5 sched-class" ng-repeat="schedCourse in vm.schedule" ng-if="vm.checkDate(vm.week[2].date, schedCourse.schedule_date)" ng-click="vm.open({'date':vm.week[2].date, 'courseStart':schedCourse.schedule_start_time, 'courseEnd': schedCourse.schedule_end_time}, schedCourse.course, vm.user, {'courseType':'sched', 'scheduledCourse': schedCourse})">
+											<div class="border center-block padding-5 margin-tb-5 bg-success text-charcoal border-r-5 sched-class" ng-repeat="schedCourse in vm.schedule" ng-if="vm.checkDate(vm.week[2].date, schedCourse.schedule_date)" ng-click="vm.open({'date':vm.week[2].date, 'courseStart':schedCourse.schedule_start_time, 'courseEnd': schedCourse.schedule_end_time}, schedCourse.course, vm.user, {'courseType':'sched', 'scheduledCourse': schedCourse})">
 												<span class="center-block table-time border-bottom padding-tb-5">{{ vm.getTime(schedCourse.schedule_start_time) }} - {{ vm.getTime(schedCourse.schedule_end_time) }}</span>
 												<span class="center-block padding-tb-5">{{schedCourse.course.course_title}}</span>
 												<span ng-if="schedCourse.course.course_location"><small>{{schedCourse.course.course_location.name}}</small></span>
@@ -187,7 +187,7 @@
 											</div>
 										</td>	
 										<td class="sched-table-width">
-											<div class="border center-block padding-5 margin-tb-5 bg-success border-r-5 sched-class" ng-repeat="schedCourse in vm.schedule" ng-if="vm.checkDate(vm.week[3].date, schedCourse.schedule_date)" ng-click="vm.open({'date':vm.week[3].date, 'courseStart':schedCourse.schedule_start_time, 'courseEnd': schedCourse.schedule_end_time}, schedCourse.course, vm.user, {'courseType':'sched', 'scheduledCourse': schedCourse})">
+											<div class="border center-block padding-5 margin-tb-5 bg-success text-charcoal border-r-5 sched-class" ng-repeat="schedCourse in vm.schedule" ng-if="vm.checkDate(vm.week[3].date, schedCourse.schedule_date)" ng-click="vm.open({'date':vm.week[3].date, 'courseStart':schedCourse.schedule_start_time, 'courseEnd': schedCourse.schedule_end_time}, schedCourse.course, vm.user, {'courseType':'sched', 'scheduledCourse': schedCourse})">
 												<span class="center-block table-time border-bottom padding-tb-5">{{ vm.getTime(schedCourse.schedule_start_time) }} - {{ vm.getTime(schedCourse.schedule_end_time) }}</span>
 												<span class="center-block padding-tb-5">{{schedCourse.course.course_title}}</span>
 												<span ng-if="schedCourse.course.course_location"><small>{{schedCourse.course.course_location.name}}</small></span>
@@ -195,7 +195,7 @@
 											</div>
 										</td>
 										<td class="sched-table-width">
-											<div class="border center-block padding-5 margin-tb-5 bg-success border-r-5 sched-class" ng-repeat="schedCourse in vm.schedule" ng-if="vm.checkDate(vm.week[4].date, schedCourse.schedule_date)" ng-click="vm.open({'date':vm.week[4].date, 'courseStart':schedCourse.schedule_start_time, 'courseEnd': schedCourse.schedule_end_time}, schedCourse.course, vm.user, {'courseType':'sched', 'scheduledCourse': schedCourse})">
+											<div class="border center-block padding-5 margin-tb-5 bg-success text-charcoal border-r-5 sched-class" ng-repeat="schedCourse in vm.schedule" ng-if="vm.checkDate(vm.week[4].date, schedCourse.schedule_date)" ng-click="vm.open({'date':vm.week[4].date, 'courseStart':schedCourse.schedule_start_time, 'courseEnd': schedCourse.schedule_end_time}, schedCourse.course, vm.user, {'courseType':'sched', 'scheduledCourse': schedCourse})">
 												<span class="center-block table-time border-bottom padding-tb-5">{{ vm.getTime(schedCourse.schedule_start_time) }} - {{ vm.getTime(schedCourse.schedule_end_time) }}</span>
 												<span class="center-block padding-tb-5">{{schedCourse.course.course_title}}</span>
 												<span ng-if="schedCourse.course.course_location"><small>{{schedCourse.course.course_location.name}}</small></span>
@@ -203,7 +203,7 @@
 											</div>
 										</td>
 										<td class="sched-table-width">
-											<div class="border center-block padding-5 margin-tb-5 bg-success border-r-5 sched-class" ng-repeat="schedCourse in vm.schedule" ng-if="vm.checkDate(vm.week[5].date, schedCourse.schedule_date)" ng-click="vm.open({'date':vm.week[5].date, 'courseStart':schedCourse.schedule_start_time, 'courseEnd': schedCourse.schedule_end_time}, schedCourse.course, vm.user, {'courseType':'sched', 'scheduledCourse': schedCourse})">
+											<div class="border center-block padding-5 margin-tb-5 bg-success text-charcoal border-r-5 sched-class" ng-repeat="schedCourse in vm.schedule" ng-if="vm.checkDate(vm.week[5].date, schedCourse.schedule_date)" ng-click="vm.open({'date':vm.week[5].date, 'courseStart':schedCourse.schedule_start_time, 'courseEnd': schedCourse.schedule_end_time}, schedCourse.course, vm.user, {'courseType':'sched', 'scheduledCourse': schedCourse})">
 												<span class="center-block table-time border-bottom padding-tb-5">{{ vm.getTime(schedCourse.schedule_start_time) }} - {{ vm.getTime(schedCourse.schedule_end_time) }}</span>
 												<span class="center-block padding-tb-5">{{schedCourse.course.course_title}}</span>
 												<span ng-if="schedCourse.course.course_location"><small>{{schedCourse.course.course_location.name}}</small></span>
@@ -211,7 +211,7 @@
 											</div>
 										</td>
 										<td class="sched-table-width">
-											<div class="border center-block padding-5 margin-tb-5 bg-success border-r-5 sched-class" ng-repeat="schedCourse in vm.schedule" ng-if="vm.checkDate(vm.week[6].date, schedCourse.schedule_date)" ng-click="vm.open({'date':vm.week[6].date, 'courseStart':schedCourse.schedule_start_time, 'courseEnd': schedCourse.schedule_end_time}, schedCourse.course, vm.user, {'courseType':'sched', 'scheduledCourse': schedCourse})">
+											<div class="border center-block padding-5 margin-tb-5 bg-success text-charcoal border-r-5 sched-class" ng-repeat="schedCourse in vm.schedule" ng-if="vm.checkDate(vm.week[6].date, schedCourse.schedule_date)" ng-click="vm.open({'date':vm.week[6].date, 'courseStart':schedCourse.schedule_start_time, 'courseEnd': schedCourse.schedule_end_time}, schedCourse.course, vm.user, {'courseType':'sched', 'scheduledCourse': schedCourse})">
 												<span class="center-block table-time border-bottom padding-tb-5">{{ vm.getTime(schedCourse.schedule_start_time) }} - {{ vm.getTime(schedCourse.schedule_end_time) }}</span>
 												<span class="center-block padding-tb-5">{{schedCourse.course.course_title}}</span>
 												<span ng-if="schedCourse.course.course_location"><small>{{schedCourse.course.course_location.name}}</small></span>
